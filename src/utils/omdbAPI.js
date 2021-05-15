@@ -1,23 +1,15 @@
-const request = require('request')
+import axios from 'axios';
+import { appConfig } from '../../config';
 
-const omdbAPI = (title, callback) => {
-    const url = 'https://www.omdbapi.com/?t=' + encodeURIComponent(title) + '&apikey=' + process.env.OMDB_API_KEY
+export const omdbAPIList = async (title) => {
+    const url = 'https://www.omdbapi.com/?s=' + encodeURIComponent(title) + '&apikey=' + appConfig.OMDB_API_KEY;
+    const response = await axios.get(url);
+    return response.data;
+};
 
-    request({ url, json: true }, (error, response ) => {
-        if (error) {
-            callback('Unable to connect to movie services!', undefined)
-        } else if (response.body.Error) {
-            callback('Unable to find movie. Try again with different search term', undefined)
-        } else {
-            callback(undefined, {
-                Title: response.body.Title,
-                Year: response.body.Year,
-                Genre: response.body.Genre,
-                imdbID: response.body.imdbID,
-                poster: response.body.poster
-            })
-        }
-    })
-}
-
-module.exports = omdbAPI
+export const omdbAPIFilm = async (title) => {
+    const url = 'https://www.omdbapi.com/?t=' + encodeURIComponent(title) + '&apikey=' + appConfig.OMDB_API_KEY;
+    const response = await axios.get(url);
+    console.log(response);
+    return response.data;
+};
