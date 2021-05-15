@@ -4,7 +4,6 @@ import SearchMovieForm from './SearchMovieForm';
 const DashboardPage = () => (
   <div>
     <SearchMovieForm />
-    Dashboard page content
   </div>
 );
 
