@@ -1,10 +1,9 @@
 import React from 'react';
-import { MoviesSummary } from './MoviesSummary';
-import ShowMoviePage from './ShowMoviePage';
+import SearchMovieForm from './SearchMovieForm';
 
 const DashboardPage = () => (
   <div>
-    <ShowMoviePage />
+    <SearchMovieForm />
     Dashboard page content
   </div>
 );
