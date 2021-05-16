@@ -1,0 +1,33 @@
+.tab-image {
+  width: 300px;
+  height: 400px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  &.-defalut {
+    background-image: url("/images/default.jpg") !important;
+  }
+}
+.tab-content {
+  width: 100%;
+}
+
+.tab-title {
+  width: 100%;
+  text-align: center;
+  font-size: 22px;
+  margin-top: 0;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.search-container {
+  margin: 2rem 0;
+  display: flex;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}

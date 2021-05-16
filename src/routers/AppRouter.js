@@ -19,6 +19,7 @@ const AppRouter = () => (
         <PrivateRoute path="/favourites" component={NotFoundPage} />
         <PrivateRoute path="/editprofile" component={NotFoundPage} />
         <PrivateRoute path="/movie/:id" component={ShowMovieItem} />
+
         <Route component={NotFoundPage} />
       </Switch>
     </div>

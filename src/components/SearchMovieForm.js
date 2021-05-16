@@ -1,5 +1,5 @@
 import React from 'react';
-import moment from 'moment';
+import SerchedFilmList from './SerchedFilmList';
 import { omdbAPIList } from '../utils/omdbAPI';
 
 
@@ -14,13 +14,18 @@ export default class SearchMovieForm extends React.Component {
             imdbID: '',
             type: '',
             poster: '',
+            serchedFilms: [],
             error: ''
         };
     }
     onTitleChange = (e) => {
         const title = e.target.value;
         this.setState(() => ({ title }), async () => {
-            const data = await omdbAPIList(this.state.title);
+            const serchedFilms = await omdbAPIList(this.state.title);
+            console.log(serchedFilms);
+            this.setState(() => ({
+                serchedFilms
+            }));
         });
     };
     onTitleSubmit = (e) => {
@@ -33,6 +38,12 @@ export default class SearchMovieForm extends React.Component {
             //wyszukanie info z omdbAPI
         }
     };
+
+    // componentDidUpdate(prevProps, prevState) {
+    //     if (prevState.serchedFilms !== this.state.serchedFilms) {
+    //         console.log('something prop has changed.', this.state.serchedFilms);
+    //     }
+    // }
 
     render() {
         return (
@@ -57,8 +68,9 @@ export default class SearchMovieForm extends React.Component {
                     </form>
                 </div>
                 <div className="content-container">
-                    Wyszukane filmy?
+                    Wyszukane filmy:
                 </div>
+                <SerchedFilmList movies={this.state.serchedFilms} />
             </div>
 
         );
