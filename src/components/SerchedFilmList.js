@@ -1,4 +1,5 @@
 import React from 'react';
+import FilmTab from './FilmTab';
 
 class SerchedFilmList extends React.Component {
     constructor(props) {
@@ -14,12 +15,13 @@ class SerchedFilmList extends React.Component {
     // }
     render() {
         return (
-            <div>
+            <div className='content-container'>
                 {
                     (this.props.movies.Response && this.props.movies.Response === 'True') ? this.props.movies.Search.map((element, index) => {
+                        console.log(element);
                         return (
-                            <div key={index}>
-                                <p>SerchedFilmList</p>
+                            <div key={element.imdbID}>
+                                <FilmTab data={element} />
                             </div>
                         );
                     }) : ''
