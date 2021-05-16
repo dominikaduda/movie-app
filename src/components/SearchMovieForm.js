@@ -62,13 +62,10 @@ export default class SearchMovieForm extends React.Component {
                             value={this.state.title}
                             onChange={this.onTitleChange}
                         />
-                        <div>
-                            <button className="button">Search Movie</button>
-                        </div>
                     </form>
                 </div>
                 <div className="content-container">
-                    Wyszukane filmy:
+                    Movies found:
                 </div>
                 <SerchedFilmList movies={this.state.serchedFilms} />
             </div>

@@ -7,8 +7,9 @@ export default class ShowMovieItem extends React.Component {
 
         this.state = {
             movie: {},
-            usersScore: 0,
-            userScore: 0
+            usersScore: '',
+            userScore: '',
+            favourite: 'no'
         };
     }
 
@@ -21,6 +22,44 @@ export default class ShowMovieItem extends React.Component {
         console.log(this.state.movie);
     }
 
+    onFavouriteClick = (e) => {
+        e.preventDefault();
+        this.setState((prevState) => ({
+            favourite: 'yes'
+        }));
+    }
+    onRemoveFavouriteClick = (e) => {
+        e.preventDefault();
+        this.setState((prevState) => ({
+            favourite: 'no'
+        }));
+    }
+
+     //---------needs update
+    onScoreChange = (e) => {
+        const scoreValue = e.target.value;
+        if((scoreValue >= 1) && (scoreValue <= 10)) {
+            this.setState((prevState) => ({
+                userScore: scoreValue
+            }));
+            this.setState(() => ({ error: '' }));
+        } else {
+            this.setState(() => ({ error: 'Score must be between 1 and 10.' }));
+        }
+    }
+
+    onSubmitClick = (e) => {
+        e.preventDefault();
+        const score = e.target.value;
+        
+        if (this.state.userScore==='') {
+            this.setState(() => ({ error: 'Please provide score.' }));
+        } else {
+            this.setState(() => ({ userScore: score }));
+            this.setState(() => ({ error: '' }));
+        }
+    }
+
     render() {
         return (
             <div className="page-header">
@@ -29,9 +68,8 @@ export default class ShowMovieItem extends React.Component {
                 </div>
                 <div className="content-container">
                     <form className="form" onSubmit={this.onTitleSubmit}>
-                        {this.state.error && <p className="form__error">{this.state.error}</p>}
                         <div className="content-container">
-                                <img src={this.state.movie.Poster}></img>
+                                <img src={this.state.movie.Poster} alt='movie'></img>
                         </div>
                         <div className="list-body">
                             <div className="list-item">Title: {this.state.movie.Title} </div>
@@ -42,7 +80,27 @@ export default class ShowMovieItem extends React.Component {
                             <div className="list-item">Plot: {this.state.movie.Plot}</div>
                             <div className="list-item">imdbRating: {this.state.movie.imdbRating}</div>
                             <div className="list-item">UsersScore: {this.state.usersScore}</div>
-                            <div className="list-item">MyScore: {this.state.userScore}</div>
+                            <div className="list-item">
+                                MyScore: {this.state.userScore}
+                                <div className="list-item__data">
+                                    <input
+                                        type="number"
+                                        placeholder="Type your score here..."
+                                        autoFocus
+                                        value={this.state.userScore}
+                                        className="text-input"
+                                        onChange={this.onScoreChange}
+                                    />
+                                    <button className="button" onClick={this.onSubmitClick}>Submit</button>
+                                    {this.state.error && <p className="form__error">{this.state.error}</p>}
+                                </div>
+                            </div>
+                            <div className="list-item">
+                                Favourite: {this.state.favourite}
+                                <div className="list-item__data">
+                                    {this.state.favourite ==='no' ? <span className="heart__gray" onClick={this.onFavouriteClick}></span> : <span className="heart" onClick={this.onRemoveFavouriteClick}></span> }
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>
