@@ -11,6 +11,7 @@ export const Header = ({ startLogout }) => (
           <h1>Movie-App</h1>
         </Link>
         <Link className="button button--link" to="/editprofile">Edit Profile</Link>
+        <Link className="button button--link" to="/favourites">Favourites</Link>
         <button className="button button--link" onClick={startLogout}>Logout</button>
       </div>
     </div>
