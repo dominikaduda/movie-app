@@ -1,7 +1,7 @@
 import React from 'react';
 import FilmTab from './FilmTab';
 
-class SerchedFilmList extends React.Component {
+class SearchedFilmList extends React.Component {
     constructor(props) {
         super();
 
@@ -31,4 +31,4 @@ class SerchedFilmList extends React.Component {
     }
 };
 
-export default SerchedFilmList;
+export default SearchedFilmList;
