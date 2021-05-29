@@ -5,14 +5,8 @@ class SearchedFilmList extends React.Component {
     constructor(props) {
         super();
 
-        console.log(props);
     }
 
-    // componentDidUpdate(prevProps, prevState) {
-    //     if (prevProps.movies !== this.props.movies) {
-    //         console.log('something prop has changed.', this.props.movies);
-    //     }
-    // }
     render() {
         return (
             <div className='content-container'>
@@ -24,7 +18,7 @@ class SearchedFilmList extends React.Component {
                                 <FilmTab data={element} />
                             </div>
                         );
-                    }) : ''
+                    }) : 'Movies not found.'
                 }
             </div>
         );

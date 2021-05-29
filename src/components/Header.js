@@ -17,7 +17,6 @@ export const Header = ({ startLogout }) => (
     </div>
   </header>
 );
-//obsluzyc Edit Profile
 
 const mapDispatchToProps = (dispatch) => ({
   startLogout: () => dispatch(startLogout())

@@ -1,25 +1,55 @@
 import React, {Fragment } from 'react';
+import { connect } from 'react-redux';
 import { omdbAPIFilmByImdbID } from '../utils/omdbAPI';
+import { startAddMovieLocal, startAddMovieFavourite, startAddMovieGlobal } from '../actions/movies';
+import database from '../firebase/firebase';
+import * as firebase from 'firebase';
 
-export default class ShowMovieItem extends React.Component {
+export class ShowMovieItem extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
             movie: {},
-            usersScore: '',
-            userScore: '',
-            favourite: 'no'
+            usersScore: 0,
+            userScore: 0,
+            favourite: 'no',
+            prevUserScore: 0
         };
     }
 
     async componentDidMount() {
-        const id = this.props.match.params.id; // we grab the ID from the URL
+        const id = this.props.match.params.id;
         const data = await omdbAPIFilmByImdbID(id);
-        console.log(id);
-        console.log(data);
         this.setState({ movie: data });
-        console.log(this.state.movie);
+
+        const uid = firebase.auth().currentUser.uid;
+        database.ref(`users/${uid}/movies`).orderByChild('imdbID').equalTo(id).once('value').then((snapshot) => {
+            if (snapshot.exists()){
+
+                snapshot.forEach((childSnapshot) => {
+                    this.setState(() => ({ 
+                        userScore: parseFloat(childSnapshot.val().userScore),
+                        favourite: childSnapshot.val().favourite,
+                        prevUserScore: parseFloat(childSnapshot.val().userScore)
+                    }));
+                });
+            }
+        });
+        database.ref(`movies`).orderByChild('imdbID').equalTo(id).once('value').then((snapshot) => {
+            if (snapshot.exists()){
+
+                snapshot.forEach((childSnapshot) => {
+                    this.setState(() => ({ 
+                        usersScore: parseFloat(childSnapshot.val().usersScore)
+                    }));
+                });
+            }
+        });
+    }
+
+    async componentDidUpdate() {
+        
     }
 
     onFavouriteClick = (e) => {
@@ -27,37 +57,76 @@ export default class ShowMovieItem extends React.Component {
         this.setState((prevState) => ({
             favourite: 'yes'
         }));
+        /*const movieImdbID = {
+            imdbID: this.state.movie.imdbID
+        };
+        this.props.startAddMovieFavourite(movieImdbID);
+        alert("Film " + movieImdbID.imdbID + " added to favourites!");*/
+
+        /*const id = this.props.match.params.id;
+        this.props.startAddMovieFavourite({imdbID: id});
+        alert("Film " + id + " added to favourites!");*/
     }
     onRemoveFavouriteClick = (e) => {
         e.preventDefault();
         this.setState((prevState) => ({
             favourite: 'no'
         }));
+        /*const id = this.props.match.params.id;
+        alert("Film " + id  + " removed from favourites!");*/
     }
 
-     //---------needs update
     onScoreChange = (e) => {
         const scoreValue = e.target.value;
-        if((scoreValue >= 1) && (scoreValue <= 10)) {
-            this.setState((prevState) => ({
-                userScore: scoreValue
-            }));
-            this.setState(() => ({ error: '' }));
+        
+        if(scoreValue.match(/^\d*$/)){
+            if((scoreValue >= 1) && (scoreValue <= 10)) {
+                this.setState((prevState) => ({
+                    userScore: scoreValue
+                }));
+                this.setState(() => ({ error: '' }));
+                
+            } else {
+                this.setState(() => ({ error: 'Score must be between 1 and 10.' }));
+            }
         } else {
-            this.setState(() => ({ error: 'Score must be between 1 and 10.' }));
+            this.setState(() => ({ error: 'Score must be natural number between 1 and 10.' }));
         }
     }
 
     onSubmitClick = (e) => {
         e.preventDefault();
-        const score = e.target.value;
         
-        if (this.state.userScore==='') {
-            this.setState(() => ({ error: 'Please provide score.' }));
+        if (this.state.userScore===0 && this.state.favourite==='no') {
+            this.setState(() => ({ error: 'Please provide score or add to favourite.' }));
         } else {
-            this.setState(() => ({ userScore: score }));
-            this.setState(() => ({ error: '' }));
+            this.setState((prevState) => ({ 
+                error: '',
+                prevUserScore: prevState.userScore
+            }));
+
+            const movieLocalData = {
+                imdbID: this.state.movie.imdbID,
+                userScore: parseFloat(this.state.userScore),
+                favourite: this.state.favourite,
+                ifScoredBefore: this.state.userScore!==0 ? 'yes' : 'no',
+                prevUserScore: parseFloat(this.state.prevUserScore)
+            }
+            this.props.startAddMovieLocal(movieLocalData);
+            alert("Change submitted!");
+            
+            if(this.state.userScore!==0){
+                const movieGlobalData = {
+                    imdbID: this.state.movie.imdbID,
+                    userScore: parseFloat(this.state.userScore)
+                }
+                this.props.startAddMovieGlobal(movieGlobalData);
+            }
+            const id = this.props.match.params.id;
+            this.props.history.push(`/`);
+            //this.props.history.push(`/movie/${id}`);
         }
+
     }
 
     render() {
@@ -91,7 +160,7 @@ export default class ShowMovieItem extends React.Component {
                                         className="text-input"
                                         onChange={this.onScoreChange}
                                     />
-                                    <button className="button" onClick={this.onSubmitClick}>Submit</button>
+                                    
                                     {this.state.error && <p className="form__error">{this.state.error}</p>}
                                 </div>
                             </div>
@@ -99,6 +168,11 @@ export default class ShowMovieItem extends React.Component {
                                 Favourite: {this.state.favourite}
                                 <div className="list-item__data">
                                     {this.state.favourite ==='no' ? <span className="heart__gray" onClick={this.onFavouriteClick}></span> : <span className="heart" onClick={this.onRemoveFavouriteClick}></span> }
+                                </div>
+                            </div>
+                            <div className="list-item">
+                                <div className="list-item__button">
+                                    <button className="button" onClick={this.onSubmitClick}>Submit</button>
                                 </div>
                             </div>
                         </div>
@@ -110,3 +184,11 @@ export default class ShowMovieItem extends React.Component {
     }
 
 }
+
+const mapDispatchToProps = (dispatch) => ({
+    startAddMovieLocal: (movie) => dispatch(startAddMovieLocal(movie)),
+    startAddMovieFavourite: (movie) => dispatch(startAddMovieFavourite(movie)),
+    startAddMovieGlobal: (movie) => dispatch(startAddMovieGlobal(movie))
+});
+
+export default connect(undefined, mapDispatchToProps)(ShowMovieItem);

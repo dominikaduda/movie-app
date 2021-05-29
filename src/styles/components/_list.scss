@@ -61,3 +61,15 @@
     padding-left: $s-size;
   }
 }
+
+.list-item__button {
+  margin: $s-size 0 0 0;
+  @media (min-width: $desktop-breakpoint) {
+    margin: 0;
+    margin-left: 42.5%;
+    padding: $s-size;
+  }
+  &:hover {
+    transform: scale(1.05);
+  }
+}
