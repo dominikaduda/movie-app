@@ -33,14 +33,6 @@ export default class FavouriteMoviePage extends React.Component {
                 favouriteFilmsTmp.forEach( async (item, index, array) => {
                     const data =  await omdbAPIFilmByImdbID(item.imdbID)
                     dataF.push(data);
-                
-                    // if(index === array.length - 1) {
-                    //     this.setState(() => ({
-                    //         favouriteFilms: dataF,
-                    //         isLoading: false
-                    //     }));
-                    //     //console.log("data: ", data);
-                    // }
 
                     if(counter === array.length - 1) {
                         this.setState(() => ({

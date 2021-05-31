@@ -48,32 +48,17 @@ export class ShowMovieItem extends React.Component {
         });
     }
 
-    async componentDidUpdate() {
-        
-    }
-
     onFavouriteClick = (e) => {
         e.preventDefault();
         this.setState((prevState) => ({
             favourite: 'yes'
         }));
-        /*const movieImdbID = {
-            imdbID: this.state.movie.imdbID
-        };
-        this.props.startAddMovieFavourite(movieImdbID);
-        alert("Film " + movieImdbID.imdbID + " added to favourites!");*/
-
-        /*const id = this.props.match.params.id;
-        this.props.startAddMovieFavourite({imdbID: id});
-        alert("Film " + id + " added to favourites!");*/
     }
     onRemoveFavouriteClick = (e) => {
         e.preventDefault();
         this.setState((prevState) => ({
             favourite: 'no'
         }));
-        /*const id = this.props.match.params.id;
-        alert("Film " + id  + " removed from favourites!");*/
     }
 
     onScoreChange = (e) => {
@@ -124,7 +109,6 @@ export class ShowMovieItem extends React.Component {
             }
             const id = this.props.match.params.id;
             this.props.history.push(`/`);
-            //this.props.history.push(`/movie/${id}`);
         }
 
     }
