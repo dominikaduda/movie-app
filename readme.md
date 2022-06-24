@@ -8,7 +8,7 @@ React, Node.js, Firebase, Redux, Express, HTML, CSS
 
 ## Functionality
 * Authorization: login, registration,
-* Validation
+* Validation,
 * Movie search engine, including:
   * Uses an additional external OMDb API database,
   * Views movies,
