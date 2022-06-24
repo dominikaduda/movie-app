@@ -4,7 +4,7 @@ A movie service that allows user to view information about movies, rate them and
 
 ## Tools and technologies
 
-React, Node.js, Firebase, Express.js, HTML, CSS
+React, Node.js, Firebase, Redux, Express, HTML, CSS
 
 ## Functionality
 * Authorization: login, registration,
@@ -14,6 +14,15 @@ React, Node.js, Firebase, Express.js, HTML, CSS
   * Views movies,
   * Filters by title,
   * Real-time search,
-  * Allows to add movies to list of favorites and view or edit it,
+  * Allows to add movies to list of favourites and view or edit it,
   * Allows to rate movies and view ratings issued by other users,
   * Compares the average ratings of website users with the rating given to imdbID.
+
+## Preview
+![Preview1](https://i.imgur.com/0EFtfdX.png)
+![Preview2](https://i.imgur.com/kgeV05q.png?1)
+![Preview2](https://i.imgur.com/bV3od6W.png)
+![Preview2](https://i.imgur.com/GzdzEwn.png)
+![Preview2](https://i.imgur.com/cvTsrWF.png)
+![Preview2](https://i.imgur.com/yZOcjys.png)
+![Preview2](https://i.imgur.com/nBXWyHP.png)
