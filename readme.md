@@ -21,8 +21,8 @@ React, Node.js, Firebase, Redux, Express, HTML, CSS
 ## Preview
 ![Preview1](https://i.imgur.com/0EFtfdX.png)
 ![Preview2](https://i.imgur.com/kgeV05q.png?1)
-![Preview2](https://i.imgur.com/bV3od6W.png)
-![Preview2](https://i.imgur.com/GzdzEwn.png)
-![Preview2](https://i.imgur.com/cvTsrWF.png)
-![Preview2](https://i.imgur.com/yZOcjys.png)
-![Preview2](https://i.imgur.com/nBXWyHP.png)
+![Preview3](https://i.imgur.com/bV3od6W.png)
+![Preview4](https://i.imgur.com/icrZNTI.png)
+![Preview5](https://i.imgur.com/cvTsrWF.png)
+![Preview6](https://i.imgur.com/yZOcjys.png)
+![Preview7](https://i.imgur.com/nBXWyHP.png)
