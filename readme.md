@@ -4,7 +4,7 @@ A movie service that allows user to view information about movies, rate them and
 
 ## Tools and technologies
 
-React, Node.js, Firebase, Redux, Express, HTML, CSS
+React, Node.js, Firebase, Redux, Express, HTML, SCSS
 
 ## Functionality
 * Authorization: login, registration,
